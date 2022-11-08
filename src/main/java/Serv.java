@@ -3,6 +3,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns={"/patients","/doctors"},loadOnStartup = 1)
 
@@ -23,6 +24,9 @@ public class Serv extends HttpServlet {
         }
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        resp.setContentType("text/html");
+        resp.getWriter().write("Thank you client! "+reqBody);
     }
 }
